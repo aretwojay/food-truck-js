@@ -86,7 +86,7 @@ class OrderView {
         console.log(`Canceling order with ID: ${orderId}`);
         this.orderController.cancelOrder(orderId);
         this.displayPaidOrders(); // Refresh the paid orders display
-        alert(`Order with ID ${orderId} has been canceled.`);
+        alert(`La commande ${orderId} a bien été annulée.`);
       }
     });
 
@@ -94,7 +94,9 @@ class OrderView {
       console.log("Validate order button clicked");
       const items = this.cartController.getItems();
       if (items.length === 0) {
-        alert("Your cart is empty. Please add items before placing an order.");
+        alert(
+          "Votre panier est vide. Ajoutez des articles avant de valider la commande."
+        );
         return;
       }
       this.validateOrderBtn.disabled = true; // Disable button to prevent multiple clicks
@@ -107,14 +109,16 @@ class OrderView {
         this.orderModal.classList.add("hidden");
         this.cartController.clearCart();
         this.displayPaidOrders(); // Refresh the paid orders display
-        alert("Order placed successfully!");
+        alert("Commande validée avec succès !");
       } catch (err) {
         console.error("Error placing order:", err);
         if (err instanceof OrderControllerError) {
           alert(err.message);
           return;
         }
-        alert("An error occurred while placing your order. Please try again.");
+        alert(
+          "Une erreur s'est produite lors de la validation de la commande. Veuillez réessayer plus tard."
+        );
       } finally {
         this.validateOrderBtn.disabled = false; // Re-enable button after processing
         this.validateOrderBtn.textContent = "Valider";
@@ -129,7 +133,7 @@ class OrderView {
 
     this.orderItems.innerHTML = "";
     if (items.length === 0) {
-      this.orderItems.innerHTML = "<p>No items in the order.</p>";
+      this.orderItems.innerHTML = "<p>Aucune commande passée.</p>";
       return;
     }
 
@@ -151,7 +155,7 @@ class OrderView {
     }
     this.paidOrderItems.innerHTML = "";
     if (orders.length === 0) {
-      this.paidOrderItems.innerHTML = "<p>No paid orders found.</p>";
+      this.paidOrderItems.innerHTML = "<p>Aucune commande payée.</p>";
       return;
     }
     orders.forEach((order) => {
